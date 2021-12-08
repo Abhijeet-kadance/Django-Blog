@@ -1,0 +1,35 @@
+{% extends "blog/base.html" %}
+
+{% block title %}
+
+{{ post.title|capfirst }} - {{ block.super }}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="content">
+    <div class="section-inner clearfix">
+
+        <h1>{{ post.title|capfirst }}</h1>
+        <p class="post-info">
+            <span>Date: {{ post.pub_date }} |</span>
+            <!-- http://127.0.0.1:8000/category/{{ post.category.slug }} -->
+            <span>Category: <a href="{% url 'post_by_category' post.category.slug %}">{{ post.category.name }}</a></span> |
+            <span>Tag:
+            {% for tag in post.tags.all %}
+            <!-- http://127.0.0.1:8000/tag/{{ tag.slug }} -->
+            <a href="{% url 'post_by_tag' tag.slug %}">{{ tag.name }}</a>
+            {% empty %}
+            None
+            {% endfor %}
+            </span>
+        </p>
+        <p>
+            {{ post.content }}
+        </p>
+
+    </div>
+</div>
+
+{% endblock %}
